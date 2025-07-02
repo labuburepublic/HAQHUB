@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HAQ MiniSocial Max+ Cruise Edition</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      color: #111;
+      margin: 0;
+      padding: 0;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    header {
+      background: #007bff;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+    }
+    .post-box {
+      background: white;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .post-box input, .post-box textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    .post-box button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .feed {
+      width: 90%;
+      max-width: 600px;
+      margin: auto;
+      margin-top: 10px;
+    }
+    .feed .post {
+      background: #fff;
+      border-radius: 12px;
+      padding: 15px;
+      margin: 10px 0;
+      box-shadow: 0 0 5px rgba(0,0,0,0.08);
+    }
+    .feed img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+    .comment-section {
+      margin-top: 10px;
+      border-top: 1px solid #ccc;
+      padding-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>HAQ MiniSocial Max+ 🚀</header>
+
+  <div class="post-box">
+    <input type="text" id="posterName" placeholder="Your Name (Optional)" />
+    <textarea id="postInput" rows="4" placeholder="Drop your cruise..."></textarea>
+    <button onclick="addPost()">Post</button>
+  </div>
+
+  <div class="feed" id="postFeed">
+    <!-- Static pinned post (yours) -->
+    <div class="post">
+      <strong>ABDULHAQ ABDUL GANIY</strong> <br>
+      ALHAMDULILLAH! 🚀 This is just the beginning of greatness. From imagination to reality — CRUISEHUB is now alive! 💥<br>
+      <img src="images/haq.png" alt="My Post Image"/>
+      <br><small>Likes: 10,000 ❤️ | Comments: 1,276 💬</small>
+      <div class="comment-section">
+        <div>💬 WELL DONE SIR</div>
+        <div>💬 This is fire 🔥</div>
+        <div>💬 The future devs salute you</div>
+      </div>
+    </div>
+
+    <!-- Celebrity sample post -->
+    <div class="post">
+      <strong>David Beckon</strong> <br>
+      Congrats to the new generation of devs putting Africa on the map 🌍<br>
+      <img src="images/celebrity1.jpg" alt="Celebrity Post Image"/>
+      <br><small>Likes: 52,300 ❤️ | Comments: 1,032 💬</small>
+      <div class="comment-section">
+        <div>💬 Respect King 👑</div>
+        <div>💬 Africa to the world!</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let posts = JSON.parse(localStorage.getItem("haq_posts")) || [];
+
+    function renderPosts() {
+      const feed = document.getElementById("postFeed");
+      posts.slice().reverse().forEach((post) => {
+        const postDiv = document.createElement("div");
+        postDiv.className = "post";
+        postDiv.innerHTML = `
+          <strong>${post.name || "Anonymous"}</strong> <br>
+          ${post.text} <br>
+          <small>${post.time}</small>
+        `;
+        feed.insertBefore(postDiv, feed.children[2]);
+      });
+    }
+
+    function addPost() {
+      const name = document.getElementById("posterName").value.trim();
+      const text = document.getElementById("postInput").value.trim();
+      if (text === "") return;
+      const time = new Date().toLocaleString();
+
+      const newPost = { name, text, time };
+      posts.push(newPost);
+      localStorage.setItem("haq_posts", JSON.stringify(posts));
+      document.getElementById('postInput').value = "";
+      renderPosts();
+    }
+
+    renderPosts();
+  </script>
+</body>
+</html>
